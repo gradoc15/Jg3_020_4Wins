@@ -11,9 +11,14 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,9 +26,12 @@ import javax.swing.JLabel;
  */
 public class GameGui extends JFrame
 {
-
+    private Bl.GameBl bl = new Bl.GameBl();
+    
     private int row = 7;
     private int col = 7;
+    
+    private Map<String, JLabel> lables = new HashMap();
     
     public GameGui() throws HeadlessException
     {
@@ -36,7 +44,8 @@ public class GameGui extends JFrame
     
     public void iniComp()
     {
-       
+        lables.clear();
+        
         Container con = this.getContentPane();
         con.setLayout(new GridLayout(row, col, 3, 3));
         
@@ -68,6 +77,7 @@ public class GameGui extends JFrame
                 lb.setOpaque(true);
                 lb.setBackground(Color.black);
                 
+                lables.put(lb.getName(), lb);
                 con.add(lb);
             }
         }
@@ -78,6 +88,27 @@ public class GameGui extends JFrame
     public void onButtonClick(MouseEvent evt)
     {
         System.out.println("Col: "+evt.getComponent().getName());
+        int col = Integer.parseInt(evt.getComponent().getName());
+        
+        try
+        {
+            int row = bl.makeMove(col);
+            
+            Bl.Value val = bl.getValueAt(row, col);
+            System.out.println("Gui--> "+row+" "+col);
+            JLabel lb = lables.get(""+(row-1)+""+col);
+            
+            System.out.println(val);
+            switch(val)
+            {
+                case Player1: lb.setBackground(Color.red); break;
+                case Player2: lb.setBackground(Color.blue); break;
+            }
+        } 
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
     
     public static void main(String[] args)
