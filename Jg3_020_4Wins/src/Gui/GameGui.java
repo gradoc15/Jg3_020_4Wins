@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,8 +43,18 @@ public class GameGui extends JFrame
         for(int i = 0; i < col; i++)
         {
             JButton btn = new JButton();
+            btn.setName(""+i);
             btn.setText("V");
             con.add(btn);
+            
+            btn.addMouseListener(new MouseAdapter()
+            {
+                @Override
+                public void mouseClicked(MouseEvent evt)
+                {
+                    onButtonClick(evt);
+                }
+            });
         }
         
         for(int i = 0; i < row-1; i++)
@@ -61,6 +73,11 @@ public class GameGui extends JFrame
         }
         
         
+    }
+    
+    public void onButtonClick(MouseEvent evt)
+    {
+        System.out.println("Col: "+evt.getComponent().getName());
     }
     
     public static void main(String[] args)
