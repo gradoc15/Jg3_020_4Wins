@@ -59,14 +59,14 @@ public class GameBl
     public Value checkWinner(int row, int col)
     {
         //###############################
-        //Link Seitwärts
+        //Proof horizontal
         int sumLeft = 0;
         int sumRight = 0;
         
         
         for(int i = 0; i < 4; i++)
         {
-            if(col+i < field[5].length)
+            if(col+i < field[row].length)
                 sumRight += field[row][col+i].getNum();
             if(col-i >= 0)
                 sumLeft += field[row][col-i].getNum();
@@ -77,8 +77,28 @@ public class GameBl
         else if(sumRight == 4 || sumRight == -4)
             return currentPlayer;
         
-        System.out.println("L: "+sumLeft);
+        //proof vertical
+        int sumUp = 0;
+        int sumDown = 0;
         
+       for(int i = 0; i < 4; i++)
+       {
+           if(row-i >= 0)
+               sumDown += field[row-i][col].getNum();
+           if(row+i < field.length)
+               sumUp += field[row+i][col].getNum();
+           
+           System.out.println("BL: "+row+" "+col);
+               
+       }
+       
+        System.out.println(sumUp);
+       if(sumDown == 4 || sumDown == -4)
+            return currentPlayer;
+        else if(sumUp == 4 || sumUp == -4)
+            return currentPlayer;
+       
+        System.out.println("here");
         return Value.Empty;
         //###############################
     }
