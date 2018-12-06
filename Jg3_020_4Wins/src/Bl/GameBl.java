@@ -6,6 +6,7 @@
 package Bl;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,7 +14,7 @@ import javax.swing.JLabel;
  */
 public class GameBl
 {
-    private Value[][] field = new Value[6][7];
+    private Value[][] field = new Value[7][7];
     private Value currentPlayer;
 
     public GameBl()
@@ -52,13 +53,42 @@ public class GameBl
             
         }
         
+        return row;
+    }
+    
+    public Value checkWinner(int row, int col)
+    {
+        //###############################
+        //Link Seitwärts
+        int sumLeft = 0;
+        int sumRight = 0;
         
+        
+        for(int i = 0; i < 4; i++)
+        {
+            if(col+i < field[5].length)
+                sumRight += field[row][col+i].getNum();
+            if(col-i >= 0)
+                sumLeft += field[row][col-i].getNum();
+        }
+        
+        if(sumLeft == 4 || sumLeft == -4)
+            return currentPlayer;
+        else if(sumRight == 4 || sumRight == -4)
+            return currentPlayer;
+        
+        System.out.println("L: "+sumLeft);
+        
+        return Value.Empty;
+        //###############################
+    }
+    
+    public void changePlayer()
+    {
         if(currentPlayer == Value.Player1)
             currentPlayer = Value.Player2;
         else if(currentPlayer == Value.Player2)
             currentPlayer = Value.Player1;
-        
-        return row;
     }
     
     public Value getValueAt(int row, int col)

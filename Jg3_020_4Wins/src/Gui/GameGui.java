@@ -5,6 +5,7 @@
  */
 package Gui;
 
+import Bl.Value;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -13,8 +14,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -104,6 +103,15 @@ public class GameGui extends JFrame
                 case Player1: lb.setBackground(Color.red); break;
                 case Player2: lb.setBackground(Color.blue); break;
             }
+            
+            Value winner = bl.checkWinner(row, col);
+            
+            if(winner.getNum() == Value.Player1.getNum())
+                JOptionPane.showMessageDialog(this, "The Winner is: Player1");
+            else if(winner.getNum() == Value.Player2.getNum())
+                JOptionPane.showMessageDialog(this, "The Winner is: Player2");
+            
+            bl.changePlayer();
         } 
         catch (Exception ex)
         {
