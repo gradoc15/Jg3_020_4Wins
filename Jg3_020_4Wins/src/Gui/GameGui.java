@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -33,6 +35,7 @@ public class GameGui extends JFrame
     private Bl.GameBl bl = null;
     
     private Map<String, JLabel> lables = new HashMap();
+    private JPanel playGround;
     
     private int row = 7;
     private int col = 7;
@@ -51,13 +54,12 @@ public class GameGui extends JFrame
     }
     
     public void iniComp()
-    {
-        lables.clear();
+    { 
         bl = new Bl.GameBl();
         
         Container con = this.getContentPane();
         
-        JPanel playGround = new JPanel();
+        playGround = new JPanel();
         playGround.setLayout(new GridLayout(row, col, 3, 3));
         
         for(int i = 0; i < col; i++)
@@ -98,6 +100,14 @@ public class GameGui extends JFrame
         this.pack();
     }
     
+    public void reset()
+    {
+        this.remove(playGround);
+        iniComp();
+        this.setSize(600,600);
+    }
+    
+    
     public void addMenus()
     {
         JMenuBar menuBar = new JMenuBar();
@@ -109,6 +119,24 @@ public class GameGui extends JFrame
         menu.add(newGame);
         menu.add(endGame);
         menuBar.add(menu);
+        
+        newGame.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                reset();
+            }
+        });
+        
+        endGame.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+               System.exit(0);
+            }
+        });
         
         this.add(menuBar, BorderLayout.NORTH);
     }
@@ -149,6 +177,7 @@ public class GameGui extends JFrame
         {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+        
     }
     
     public static void main(String[] args)
