@@ -37,30 +37,16 @@ public class GameGui extends JFrame
     private int row = 7;
     private int col = 7;
     
-    private boolean aviableGame = false;
-    
     public GameGui() throws HeadlessException
     {
         super.setTitle("4-Wins");
         this.setLayout(new BorderLayout());
+        addMenus();
         iniComp();
         super.setSize(600, 600);
         super.setLocationRelativeTo(null);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        
-        
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Options");
-        
-        JMenuItem newGame = new JMenuItem("new Game");
-        JMenuItem endGame = new JMenuItem("Cancle game");
-        
-        menu.add(newGame);
-        menu.add(endGame);
-        menuBar.add(menu);
-        
-        this.add(menuBar, BorderLayout.NORTH);
+ 
 
     }
     
@@ -68,7 +54,6 @@ public class GameGui extends JFrame
     {
         lables.clear();
         bl = new Bl.GameBl();
-        aviableGame = true;
         
         Container con = this.getContentPane();
         
@@ -111,6 +96,21 @@ public class GameGui extends JFrame
         
         con.add(playGround, BorderLayout.CENTER);
         this.pack();
+    }
+    
+    public void addMenus()
+    {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Options");
+        
+        JMenuItem newGame = new JMenuItem("new Game");
+        JMenuItem endGame = new JMenuItem("Cancle game");
+        
+        menu.add(newGame);
+        menu.add(endGame);
+        menuBar.add(menu);
+        
+        this.add(menuBar, BorderLayout.NORTH);
     }
     
     

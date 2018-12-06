@@ -16,6 +16,8 @@ public class GameBl
 {
     private Value[][] field = new Value[6][7];
     private Value currentPlayer;
+    
+    private boolean playableGame = true;
 
     public GameBl()
     {
@@ -34,7 +36,8 @@ public class GameBl
     
     public int makeMove(int col)throws Exception
     {
-        
+        if(!playableGame)
+            throw new Exception("The game is over, you can not make a move");
         if(field[0][col].getNum() != Value.Empty.getNum())
             throw new Exception("Invalid move, field is not aviable");
    
@@ -58,11 +61,11 @@ public class GameBl
     
     public Value checkWinner(int row, int col)
     {
+        playableGame = false;
         //###############################
         //Proof horizontal
         int sumLeft = 0;
         int sumRight = 0;
-        
         
         for(int i = 0; i < 4; i++)
         {
@@ -131,6 +134,8 @@ public class GameBl
            return Value.Draw;
        
         System.out.println("here");
+        
+        playableGame = true;
         
         return Value.Empty;
         //###############################
