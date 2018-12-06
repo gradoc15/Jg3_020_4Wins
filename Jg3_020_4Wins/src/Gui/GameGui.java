@@ -6,6 +6,7 @@
 package Gui;
 
 import Bl.Value;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -17,7 +18,11 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -27,34 +32,55 @@ public class GameGui extends JFrame
 {
     private Bl.GameBl bl = null;
     
+    private Map<String, JLabel> lables = new HashMap();
+    
     private int row = 7;
     private int col = 7;
     
-    private Map<String, JLabel> lables = new HashMap();
+    private boolean aviableGame = false;
     
     public GameGui() throws HeadlessException
     {
         super.setTitle("4-Wins");
+        this.setLayout(new BorderLayout());
         iniComp();
         super.setSize(600, 600);
         super.setLocationRelativeTo(null);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        
+        
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Options");
+        
+        JMenuItem newGame = new JMenuItem("new Game");
+        JMenuItem endGame = new JMenuItem("Cancle game");
+        
+        menu.add(newGame);
+        menu.add(endGame);
+        menuBar.add(menu);
+        
+        this.add(menuBar, BorderLayout.NORTH);
+
     }
     
     public void iniComp()
     {
         lables.clear();
         bl = new Bl.GameBl();
+        aviableGame = true;
         
         Container con = this.getContentPane();
-        con.setLayout(new GridLayout(row, col, 3, 3));
+        
+        JPanel playGround = new JPanel();
+        playGround.setLayout(new GridLayout(row, col, 3, 3));
         
         for(int i = 0; i < col; i++)
         {
             JButton btn = new JButton();
             btn.setName(""+i);
             btn.setText("V");
-            con.add(btn);
+            playGround.add(btn);
             
             btn.addMouseListener(new MouseAdapter()
             {
@@ -65,6 +91,7 @@ public class GameGui extends JFrame
                 }
             });
         }
+
         
         for(int i = 0; i < row-1; i++)
         {
@@ -78,12 +105,14 @@ public class GameGui extends JFrame
                 lb.setBackground(Color.black);
                 
                 lables.put(lb.getName(), lb);
-                con.add(lb);
+                playGround.add(lb);
             }
         }
         
-        
+        con.add(playGround, BorderLayout.CENTER);
+        this.pack();
     }
+    
     
     public void onButtonClick(MouseEvent evt)
     {

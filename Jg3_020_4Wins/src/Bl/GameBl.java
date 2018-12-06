@@ -36,7 +36,7 @@ public class GameBl
     {
         
         if(field[0][col].getNum() != Value.Empty.getNum())
-            throw new Exception("Invalid move, field is already used");
+            throw new Exception("Invalid move, field is not aviable");
    
         int row = -1;
         for(int i = field.length-1; i >= 0; i--)
