@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class GameBl
 {
-    private Value[][] field = new Value[7][7];
+    private Value[][] field = new Value[6][7];
     private Value currentPlayer;
 
     public GameBl()
@@ -116,10 +116,6 @@ public class GameBl
            if(row+i < field.length && col+i < field[row].length)
                sumDiaDownRight += field[row+i][col+i].getNum();
            
-           System.out.println("UpLeft "+sumDiaUpLeft);
-           System.out.println("DownLeft "+sumDiaDownLeft);
-           System.out.println("UpRight "+sumDiaUpRight);
-           System.out.println("DownRight "+sumDiaDownRight);
        }
        
        if(sumDiaUpLeft == 4 || sumDiaUpLeft == -4)
@@ -131,10 +127,30 @@ public class GameBl
        else if(sumDiaDownRight == 4 || sumDiaDownRight == -4)
            return currentPlayer;
        
+       if(testDraw())
+           return Value.Draw;
        
         System.out.println("here");
+        
         return Value.Empty;
         //###############################
+    }
+    
+    public boolean testDraw()
+    {
+        
+        for(int i = 0; i < field.length; i++)
+        {
+            Value[] row = field[i];
+            
+            for(int j = 0; j < row.length; j++)
+            {
+                if(field[i][j].getNum() == Value.Empty.getNum())
+                    return false;
+            }
+        }
+        
+        return true;
     }
     
     public void changePlayer()

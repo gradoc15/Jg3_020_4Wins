@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class GameGui extends JFrame
 {
-    private Bl.GameBl bl = new Bl.GameBl();
+    private Bl.GameBl bl = null;
     
     private int row = 7;
     private int col = 7;
@@ -44,6 +44,7 @@ public class GameGui extends JFrame
     public void iniComp()
     {
         lables.clear();
+        bl = new Bl.GameBl();
         
         Container con = this.getContentPane();
         con.setLayout(new GridLayout(row, col, 3, 3));
@@ -95,7 +96,7 @@ public class GameGui extends JFrame
             
             Bl.Value val = bl.getValueAt(row, col);
             System.out.println("Gui--> "+row+" "+col);
-            JLabel lb = lables.get(""+(row-1)+""+col);
+            JLabel lb = lables.get(""+(row)+""+col);
             
             System.out.println(val);
             switch(val)
@@ -110,6 +111,8 @@ public class GameGui extends JFrame
                 JOptionPane.showMessageDialog(this, "The Winner is: Player1");
             else if(winner.getNum() == Value.Player2.getNum())
                 JOptionPane.showMessageDialog(this, "The Winner is: Player2");
+            else if(winner.getNum() == Value.Draw.getNum())
+                JOptionPane.showMessageDialog(this, "Its a draw");
             
             bl.changePlayer();
         } 
