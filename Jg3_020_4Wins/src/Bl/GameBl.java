@@ -98,6 +98,40 @@ public class GameBl
         else if(sumUp == 4 || sumUp == -4)
             return currentPlayer;
        
+       //diagonal
+       
+       int sumDiaUpLeft = 0;
+       int sumDiaUpRight = 0;
+       int sumDiaDownLeft = 0;
+       int sumDiaDownRight = 0;
+       
+       for(int i = 0; i < 4; i++)
+       {
+           if(row-i >= 0 && col-i >= 0)
+               sumDiaUpLeft += field[row-i][col-i].getNum();
+           if(row-i >= 0 && col+i < field[row].length)
+               sumDiaUpRight += field[row-i][col+i].getNum();
+           if(row+i < field.length && col-i >= 0)
+               sumDiaDownLeft += field[row+i][col-i].getNum();
+           if(row+i < field.length && col+i < field[row].length)
+               sumDiaDownRight += field[row+i][col+i].getNum();
+           
+           System.out.println("UpLeft "+sumDiaUpLeft);
+           System.out.println("DownLeft "+sumDiaDownLeft);
+           System.out.println("UpRight "+sumDiaUpRight);
+           System.out.println("DownRight "+sumDiaDownRight);
+       }
+       
+       if(sumDiaUpLeft == 4 || sumDiaUpLeft == -4)
+           return currentPlayer;
+       else if(sumDiaUpRight == 4 || sumDiaUpRight == -4)
+           return currentPlayer;
+       else if(sumDiaDownLeft == 4 || sumDiaDownLeft == -4)
+           return currentPlayer;
+       else if(sumDiaDownRight == 4 || sumDiaDownRight == -4)
+           return currentPlayer;
+       
+       
         System.out.println("here");
         return Value.Empty;
         //###############################
