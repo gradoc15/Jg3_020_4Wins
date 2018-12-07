@@ -49,8 +49,6 @@ public class GameGui extends JFrame
         super.setSize(600, 600);
         super.setLocationRelativeTo(null);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-
     }
     
     public void iniComp()
@@ -79,7 +77,6 @@ public class GameGui extends JFrame
             });
         }
 
-        
         for(int i = 0; i < row-1; i++)
         {
             for(int j = 0; j < col; j++)
@@ -99,14 +96,6 @@ public class GameGui extends JFrame
         con.add(playGround, BorderLayout.CENTER);
         this.pack();
     }
-    
-    public void reset()
-    {
-        this.remove(playGround);
-        iniComp();
-        this.setSize(600,600);
-    }
-    
     
     public void addMenus()
     {
@@ -141,10 +130,15 @@ public class GameGui extends JFrame
         this.add(menuBar, BorderLayout.NORTH);
     }
     
+    public void reset()
+    {
+        this.remove(playGround);
+        iniComp();
+        this.setSize(600,600);
+    }
     
     public void onButtonClick(MouseEvent evt)
     {
-        System.out.println("Col: "+evt.getComponent().getName());
         int col = Integer.parseInt(evt.getComponent().getName());
         
         try
@@ -152,10 +146,9 @@ public class GameGui extends JFrame
             int row = bl.makeMove(col);
             
             Bl.Value val = bl.getValueAt(row, col);
-            System.out.println("Gui--> "+row+" "+col);
+            
             JLabel lb = lables.get(""+(row)+""+col);
             
-            System.out.println(val);
             switch(val)
             {
                 case Player1: lb.setBackground(Color.red); break;
@@ -177,7 +170,6 @@ public class GameGui extends JFrame
         {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
     }
     
     public static void main(String[] args)

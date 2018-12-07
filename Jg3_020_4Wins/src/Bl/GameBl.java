@@ -44,7 +44,6 @@ public class GameBl
         int row = -1;
         for(int i = field.length-1; i >= 0; i--)
         {
-            System.out.println("Bl-Loop: "+i+" "+col);
             if(field[i][col].getNum() == Value.Empty.getNum())
             {
                 field[i][col] = currentPlayer;
@@ -53,26 +52,42 @@ public class GameBl
                 System.out.println(field[i][col]);
                 break;
             }
-            
-        }
-        
+        }       
         return row;
     }
     
     public Value checkWinner(int row, int col)
     {
         playableGame = false;
-        //###############################
+        
+  
         //Proof horizontal
         int sumLeft = 0;
         int sumRight = 0;
         
-        for(int i = 0; i < 4; i++)
+//        for(int i = 0; i < 4; i++)
+//        {
+//            if(col+i < field[row].length)
+//                sumRight += field[row][col+i].getNum();
+//            if(col-i >= 0)
+//                sumLeft += field[row][col-i].getNum();
+//        }
+
+        for(int i = 0; i < field.length; i++)
         {
-            if(col+i < field[row].length)
-                sumRight += field[row][col+i].getNum();
-            if(col-i >= 0)
-                sumLeft += field[row][col-i].getNum();
+            sumRight = 0;
+            sumLeft = 0;
+            
+            for(int j = 0; j < field[i].length-3; j++)
+            {
+                sumRight += field[i][j].getNum();
+            }
+            
+            for(int j = field[i].length-1; j > 3; j--)
+            {
+                sumLeft += field[i][j].getNum();
+            }
+                
         }
         
         if(sumLeft == 4 || sumLeft == -4)
@@ -102,7 +117,6 @@ public class GameBl
             return currentPlayer;
        
        //diagonal
-       
        int sumDiaUpLeft = 0;
        int sumDiaUpRight = 0;
        int sumDiaDownLeft = 0;
@@ -118,7 +132,6 @@ public class GameBl
                sumDiaDownLeft += field[row+i][col-i].getNum();
            if(row+i < field.length && col+i < field[row].length)
                sumDiaDownRight += field[row+i][col+i].getNum();
-           
        }
        
        if(sumDiaUpLeft == 4 || sumDiaUpLeft == -4)
@@ -130,20 +143,17 @@ public class GameBl
        else if(sumDiaDownRight == 4 || sumDiaDownRight == -4)
            return currentPlayer;
        
+       
        if(testDraw())
            return Value.Draw;
-       
-        System.out.println("here");
         
         playableGame = true;
         
         return Value.Empty;
-        //###############################
     }
     
     public boolean testDraw()
     {
-        
         for(int i = 0; i < field.length; i++)
         {
             Value[] row = field[i];
