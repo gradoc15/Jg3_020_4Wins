@@ -37,7 +37,8 @@ public class GameGui extends JFrame
     private Map<String, JLabel> lables = new HashMap();
     private JPanel playGround;
     
-    private int row = 7;
+    //+1 Aufgrund der Buttonreihe
+    private int row = 6+1;
     private int col = 7;
     
     public GameGui() throws HeadlessException
@@ -53,7 +54,8 @@ public class GameGui extends JFrame
     
     public void iniComp()
     { 
-        bl = new Bl.GameBl();
+        //-1 Da die Buttons nicht mitgezählt werden
+        bl = new Bl.GameBl(row-1, 8);
         
         Container con = this.getContentPane();
         

@@ -14,14 +14,16 @@ import javax.swing.JOptionPane;
  */
 public class GameBl
 {
-    private Value[][] field = new Value[6][7];
+    private Value[][] field;
     private Value currentPlayer;
     
     private boolean playableGame = true;
 
-    public GameBl()
+    public GameBl(int anzRow, int anzCol)
     {
         currentPlayer = Value.Player1;
+        
+        field = new Value[anzRow][anzCol];
         
         for(int i = 0; i < field.length; i++)
         {
@@ -83,7 +85,7 @@ public class GameBl
                 sumRight += field[i][j].getNum();
             }
             
-            for(int j = field[i].length-1; j > 3; j--)
+            for(int j = field[i].length-1; j > 2; j--)
             {
                 sumLeft += field[i][j].getNum();
             }
@@ -116,34 +118,38 @@ public class GameBl
         else if(sumUp == 4 || sumUp == -4)
             return currentPlayer;
        
-       //diagonal
-       int sumDiaUpLeft = 0;
-       int sumDiaUpRight = 0;
-       int sumDiaDownLeft = 0;
-       int sumDiaDownRight = 0;
-       
-       for(int i = 0; i < 4; i++)
-       {
-           if(row-i >= 0 && col-i >= 0)
-               sumDiaUpLeft += field[row-i][col-i].getNum();
-           if(row-i >= 0 && col+i < field[row].length)
-               sumDiaUpRight += field[row-i][col+i].getNum();
-           if(row+i < field.length && col-i >= 0)
-               sumDiaDownLeft += field[row+i][col-i].getNum();
-           if(row+i < field.length && col+i < field[row].length)
-               sumDiaDownRight += field[row+i][col+i].getNum();
-       }
-       
-       if(sumDiaUpLeft == 4 || sumDiaUpLeft == -4)
-           return currentPlayer;
-       else if(sumDiaUpRight == 4 || sumDiaUpRight == -4)
-           return currentPlayer;
-       else if(sumDiaDownLeft == 4 || sumDiaDownLeft == -4)
-           return currentPlayer;
-       else if(sumDiaDownRight == 4 || sumDiaDownRight == -4)
-           return currentPlayer;
-       
-       
+ 
+       int sumDiaLeftDown = 0;
+       int sumDiaRightDown = 0;
+       //DiaLeftDown
+        for (int i = field.length - 1; i > 2; i--) 
+        {
+            for (int k = 0; k < field.length - 3; k++) 
+            {             
+                sumDiaLeftDown = 0;
+                for (int j = 0; j < 4; j++)
+                    sumDiaLeftDown += field[i - j][j + k].getNum();
+                
+                if (sumDiaLeftDown == 4 ||sumDiaLeftDown == -4) 
+                    return currentPlayer;
+            }
+        }
+        
+        //DiaRightDown
+        for (int i = field.length - 1; i > 2; i--)
+        {
+            for (int k = 0; k < field.length - 2; k++) 
+            {               
+                sumDiaRightDown = 0;
+                
+                for (int j = 0; j < 4; j++)                     
+                    sumDiaRightDown += field[i - j][3 - j + k].getNum();
+                
+                if (sumDiaRightDown == 4 ||sumDiaRightDown == -4)
+                    return currentPlayer;
+            }
+        }
+        
        if(testDraw())
            return Value.Draw;
         
