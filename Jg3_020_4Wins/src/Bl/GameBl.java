@@ -128,7 +128,12 @@ public class GameBl
             {             
                 sumDiaLeftDown = 0;
                 for (int j = 0; j < 4; j++)
+                {
+                    if(i - j < 0 || i - j > field.length-1 || j + k <0 || j + k > field[0].length-1)
+                        break;
+                    
                     sumDiaLeftDown += field[i - j][j + k].getNum();
+                }
                 
                 if (sumDiaLeftDown == 4 ||sumDiaLeftDown == -4) 
                     return currentPlayer;
@@ -141,9 +146,15 @@ public class GameBl
             for (int k = 0; k < field.length - 2; k++) 
             {               
                 sumDiaRightDown = 0;
+      
                 
-                for (int j = 0; j < 4; j++)                     
+                for (int j = 0; j < 4; j++)
+                {
+                    if(i - j < 0 || i - j > field.length-1 || 3 - j + k < 0 || 3 - j + k > field[0].length-1)
+                        break;
+                        
                     sumDiaRightDown += field[i - j][3 - j + k].getNum();
+                }
                 
                 if (sumDiaRightDown == 4 ||sumDiaRightDown == -4)
                     return currentPlayer;
@@ -186,6 +197,18 @@ public class GameBl
     {
         return field[row][col];
     }
+    
+    public void setPlayer(Value val)
+    {
+        currentPlayer = val;
+    }
+
+    public Value getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+    
+    
     
     
 }

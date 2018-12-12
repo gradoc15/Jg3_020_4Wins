@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Bl;
 
 import java.util.Arrays;
@@ -12,37 +7,58 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- *
- * @author User
- */
+@RunWith(value = Parameterized.class)
 public class GameBlTest
 {
+    
     @Parameter(value = 0)
-    private int row;
-    
+        public int sizeRow;
     @Parameter(value = 1)
-    private int col;
-    
+        public int sizeCol;
     @Parameter(value = 2)
-    private int expectedMakeMove;
+        public int row;
+    @Parameter(value = 3)
+        public int col;
+    @Parameter(value = 4)
+        public boolean ergTestDraw;
+    @Parameter(value = 5)
+        public Value actPlayer;
+    @Parameter(value = 6)
+        public Value ergChangePlayer;
+    @Parameter(value = 7)
+        public int move1;
+    @Parameter(value = 8)
+        public int move2;
+    @Parameter(value = 9)
+        public int move3;
+    @Parameter(value = 10)
+        public int move4;
+    @Parameter(value = 11)
+        public int move5;
+    @Parameter(value = 12)
+        public int move6;
+    @Parameter(value = 13)
+        public int move7;
+    @Parameter(value = 14)
+        public Value ergWinner;
+    
     
     @Parameters(name = "")
     public static Iterable<Object[]> data1()
     {
         return Arrays.asList(new Object[][]
         {
-            {1.0, 2.0, 6.0},
-            {-1.0, 2.0, 1.0,-3.0,-2.0,-0.5},
-            {5.0, 3.0, 8.0,2.0,15.0,1.66666666666},
-            {5.0, 3.0, 7.0,0.0,7.0,1.0}
+            {6,7,5,1,false,Value.Player1,Value.Player2,1,5,2,5,3,5,4,Value.Empty},
+            {8,8,7,1,false,Value.Player2,Value.Player1,1,2,6,4,5,6,7,Value.Player1}
                 
         });
                  
-    } 
+    }  
     
     public GameBlTest()
     {
@@ -75,26 +91,32 @@ public class GameBlTest
     public void testMakeMove() throws Exception
     {
         System.out.println("makeMove");
-        GameBl instance = new GameBl();
+        System.out.println("sizeR "+sizeRow);
+        System.out.println("sizeC "+sizeCol );
+        GameBl instance = new GameBl(sizeRow, sizeCol);
         int result = instance.makeMove(col);
-        assertEquals(this.expectedMakeMove, result);
+        assertEquals(this.row, result);
     }
 
     /**
      * Test of checkWinner method, of class GameBl.
      */
     @Test
-    public void testCheckWinner()
+    public void testCheckWinner()throws Exception
     {
         System.out.println("checkWinner");
-        int row = 0;
-        int col = 0;
-        GameBl instance = new GameBl();
-        Value expResult = null;
+        
+        GameBl instance = new GameBl(sizeRow, sizeCol);
+        instance.makeMove(move1);
+        instance.makeMove(move2);
+        instance.makeMove(move3);
+        instance.makeMove(move4);
+        instance.makeMove(move5);
+        instance.makeMove(move6);
+        int row = instance.makeMove(move7);
+
         Value result = instance.checkWinner(row, col);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(ergWinner, result);
     }
 
     /**
@@ -104,12 +126,9 @@ public class GameBlTest
     public void testTestDraw()
     {
         System.out.println("testDraw");
-        GameBl instance = new GameBl();
-        boolean expResult = false;
+        GameBl instance = new GameBl(sizeRow, sizeCol);
         boolean result = instance.testDraw();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(ergTestDraw, result);
     }
 
     /**
@@ -119,10 +138,10 @@ public class GameBlTest
     public void testChangePlayer()
     {
         System.out.println("changePlayer");
-        GameBl instance = new GameBl();
+        GameBl instance = new GameBl(sizeRow, sizeCol);
+        instance.setPlayer(actPlayer);  
         instance.changePlayer();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getCurrentPlayer(), ergChangePlayer);
     }
 
     /**
@@ -132,14 +151,10 @@ public class GameBlTest
     public void testGetValueAt()
     {
         System.out.println("getValueAt");
-        int row = 0;
-        int col = 0;
-        GameBl instance = new GameBl();
-        Value expResult = null;
+        GameBl instance = new GameBl(sizeRow, sizeCol);
+        Value expResult = Value.Empty;
         Value result = instance.getValueAt(row, col);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
